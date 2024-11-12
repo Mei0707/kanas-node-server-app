@@ -6,6 +6,7 @@ import cors from "cors";
 import UserRoutes from "./Kanbas/Users/routes.js";
 import CourseRoutes from "./Kanbas/Courses/routes.js";
 import session from "express-session";
+import ModuleRoutes from "./Kanbas/Modules/routes.js";
 
 const app = express();
 UserRoutes(app);
@@ -34,5 +35,7 @@ app.use(session(sessionOptions));
 app.use(express.json());
 // Hello(app);
 CourseRoutes(app);
+// EnrollmentRoutes(app);
+ModuleRoutes(app);
 Lab5(app);
 app.listen(process.env.PORT || 4000, () => console.log('Server listening on port 4000'));
