@@ -2,8 +2,32 @@ import { current } from "@reduxjs/toolkit";
 import * as dao from "./dao.js";
 import * as courseDao from "../Courses/dao.js";
 import * as enrollmentsDao from "../Enrollments/dao.js";
+import winston from "winston"
 
 export default function UserRoutes(app) {
+  const logger = winston.createLogger({
+    level: "info",
+    format: winston.format.json(),
+    transports: [
+      //
+      // - Write all logs with importance level of `error` or higher to `error.log`
+      //   (i.e., error, fatal, but not other levels)
+      //
+      new winston.transports.File({ filename: 'error.log', level: 'error' }),
+      //
+      // - Write all logs with importance level of `info` or higher to `combined.log`
+      //   (i.e., fatal, error, warn, and info, but not trace)
+      //
+      new winston.transports.File({ filename: 'combined.log' }),
+    ],
+  })
+
+  if (process.env.NODE_ENV !== 'production') {
+    logger.add(new winston.transports.Console({
+      format: winston.format.simple(),
+    }));
+  }
+
   const createUser = (req, res) => { };
   const deleteUser = (req, res) => { };
   const findAllUsers = (req, res) => { };
@@ -17,10 +41,7 @@ export default function UserRoutes(app) {
     res.json(currentUser);
   };
   const signup = (req, res) => {
-    res.status(200).json(
-      { message: req.body }
-    );
-    return;
+    logger.log("info", "Request Body received: ", req.body)
     const user = dao.findUserByUsername(req.body.username);
     if (user) {
       res.status(400).json(
@@ -35,9 +56,10 @@ export default function UserRoutes(app) {
   const signin = (req, res) => {
     const { username, password } = req.body;
     const currentUser = dao.findUserByCredentials(username, password);
+    logger.info("current user is ", currentUser)
     if (currentUser) {
       req.session["currentUser"] = currentUser;
-      req.json(currentUser);
+      res.json(currentUser);
     } else {
       res.status(401).json({ message: "Unable to login. Try again later. " });
     }
@@ -52,7 +74,7 @@ export default function UserRoutes(app) {
       res.sendStatus(401);
       return;
     }
-    res.json(currentUser);
+    res.json(null);
   };
   const findCoursesForEnrolledUser = (req, res) => {
     let { userId } = req.params;

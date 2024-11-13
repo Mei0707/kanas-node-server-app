@@ -10,7 +10,6 @@ import ModuleRoutes from "./Kanbas/Modules/routes.js";
 import AssignmentRoutes from "./Kanbas/Assignments/routes.js";
 
 const app = express();
-UserRoutes(app);
 app.use(cors({
     credentials: true,
     // origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
@@ -34,7 +33,12 @@ if (process.env.NODE_ENV !== "development") {
 app.use(session(sessionOptions));
 
 app.use(express.json());
+app.post('/ping', (req, res) => {
+    res.json({requestBody: req.body})  // <==== req.body will be a parsed JSON object
+  })
 // Hello(app);
+UserRoutes(app);
+
 CourseRoutes(app);
 // EnrollmentRoutes(app);
 ModuleRoutes(app);
