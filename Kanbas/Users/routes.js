@@ -70,11 +70,12 @@ export default function UserRoutes(app) {
   };
   const profile = async (req, res) => {
     const currentUser = req.session["currentUser"];
+    // logger.info("profile current user is ", currentUser)
     if (!currentUser) {
       res.sendStatus(401);
       return;
     }
-    res.json(null);
+    res.json(currentUser);
   };
   const findCoursesForEnrolledUser = (req, res) => {
     let { userId } = req.params;

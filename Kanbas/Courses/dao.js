@@ -10,7 +10,7 @@ export function findCoursesForEnrolledUser(userId) {
     return enrolledCourses;
 };
 export function createCourse(course) {
-    const newCourse = { ...courses, _id: Database.now().toString() };
+    const newCourse = { ...courses, _id: Date.now().toString() };
     Database.courses = [...Database.courses, newCourse];
     return newCourse;
 };
