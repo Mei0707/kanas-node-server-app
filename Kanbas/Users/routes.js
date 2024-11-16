@@ -1,4 +1,3 @@
-import { current } from "@reduxjs/toolkit";
 import * as dao from "./dao.js";
 import * as courseDao from "../Courses/dao.js";
 import * as enrollmentsDao from "../Enrollments/dao.js";
