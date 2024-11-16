@@ -33,7 +33,7 @@ export default function CourseRoutes(app) {
     });
     app.get("/api/courses/:courseId/assignments", (req, res) => {
         const { courseId } = req.params;
-        const assignments = assignmentDao.findAssignmentsForCourse(courseId);
+        const assignments = assignmentsDao.findAssignmentsForCourse(courseId);
         res.json(assignments);
     });
     app.post("/api/courses/:courseId/assignments", (req, res) => {

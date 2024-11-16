@@ -4,12 +4,12 @@ export function findAssignmentsForCourse(courseId) {
     return assignments.filter((assignment) => assignment.course === courseId);
 };
 export function createAssignment(assignment) {
-    const newAssignment = { ...assignment, _id: Database.now().toString() };
-    Database.modules = [ ...Database.modules, newModule];
-    return newModule;
+    const newAssignment = { ...assignment, _id: Date.now().toString() };
+    Database.assignments = [...Database.assignments, newAssignment];
+    return newAssignment;
 };
-export function deletAssignment(assignmentId) {
-    const  { assignments } = Database;
+export function deleteAssignment(assignmentId) {
+    const { assignments } = Database;
     Database.assignments = assignments.filter((assignment) => assignment._id !== assignmentId);
 };
 export function updateAssignment(assignmentId, assignmentUpdates) {
@@ -18,3 +18,4 @@ export function updateAssignment(assignmentId, assignmentUpdates) {
     Object.assign(assignment, assignmentUpdates);
     return assignment;
 };
+

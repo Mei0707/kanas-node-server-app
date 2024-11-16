@@ -20,7 +20,7 @@ app.use(cors({
 const sessionOptions = {
     secret: process.env.SESSION_SECRET || "kanbas",
     resave: false,
-    saveUnintialized: false,
+    saveUninitialized: false,
 };
 if (process.env.NODE_ENV !== "development") {
     sessionOptions.proxy = true;
@@ -31,14 +31,12 @@ if (process.env.NODE_ENV !== "development") {
     };
 }
 app.use(session(sessionOptions));
-
 app.use(express.json());
 app.post('/ping', (req, res) => {
     res.json({requestBody: req.body})  // <==== req.body will be a parsed JSON object
   })
 // Hello(app);
 UserRoutes(app);
-
 CourseRoutes(app);
 // EnrollmentRoutes(app);
 ModuleRoutes(app);
