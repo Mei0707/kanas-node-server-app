@@ -13,11 +13,11 @@ import AssignmentRoutes from "./Kanbas/Assignments/routes.js";
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas"
 mongoose.connect(CONNECTION_STRING);
 const app = express();
+console.log(`origin is ${process.env.NETLIFY_URL}`)
 app.use(cors({
     credentials: true,
     // origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
     origin: process.env.NETLIFY_URL || "http://localhost:3000",
-
 }
 ));
 const sessionOptions = {
